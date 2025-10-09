@@ -533,14 +533,14 @@
         <div class="columns is-centered">
           <div class="is-half">
             <p>
-              <img src="static/images/base_overlay.svg" alt="Main results" class="blend-img-background center-image"
+              <img src="static/images/base_overlay.svg" alt="HIQL policy fails in long-horizon task" class="blend-img-background center-image"
                 style="width: 100%; height: auto; align-self: center;">
             </p>
           </div>
           <div style="width: 20px;"></div>
           <div class="is-half">
             <p>
-              <img src="static/images/ttgs_overlay.svg" alt="Main results" class="blend-img-background center-image"
+              <img src="static/images/ttgs_overlay.svg" alt="TTGS helps by providing a guiding path and selecting a high-quality subgoal at each step" class="blend-img-background center-image"
                 style="width: 100%; height: auto; align-self: center;">
             </p>
           </div>
@@ -549,7 +549,7 @@
           <div class="column is-full">
             <div class="content">
               <p>
-                <img src="static/images/dist_eval.svg" alt="Main results" class="blend-img-background center-image"
+                <img src="static/images/dist_eval.svg" alt="GCRL policies become less reliable at longer horizons" class="blend-img-background center-image"
                   style="width: 100%; height: auto; align-self: center;">
               </p>
             </div>
@@ -612,6 +612,7 @@
                 function, so it relies only on information available at test time. TTGS generally improves or maintains
                 success across all evaluated environments, with the largest gains on <span class="is-family-monospace">giant</span> layouts where one-shot
                 execution is difficult.
+                On <span class="is-family-monospace">pointmaze-giant-stitch-v0</span>, TTGS raises HIQL from 0.0\% to 80.9\% and GCIQL from 0.0\% to 98.0\%. On <span class="is-family-monospace">humanoidmaze-giant-stitch-v0</span>, HIQL is improved from 4.4\% to 78.1\%. These cases highlight how sequences of short, reliable hops help frozen policies traverse large mazes that require stitching behaviors from disparate parts of the dataset. Notably, TTGS boosts even HIQL, which already includes a learned high-level controller, suggesting that explicit planning can provide more reliable subgoals than a purely learned subgoal policy in long-horizon settings. We further observe improvements on several pixel-based tasks, indicating that value-derived distances can offer a strong planning signal even when domain-specific metrics are difficult to define.
               </p>
               <img src="static/images/ttgs_bars.svg" alt="Main results" class="blend-img-background center-image"
                 style="width: 100%; height: auto; align-self: center;">
