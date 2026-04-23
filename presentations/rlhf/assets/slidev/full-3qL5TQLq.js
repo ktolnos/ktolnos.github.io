@@ -1,0 +1,1 @@
+import{o as l,e as o,i as s}from"../modules/vue-CDq4lhJJ.js";import{_ as t}from"../index-sLRb3-zV.js";const c={},r={class:"slidev-layout full w-full h-full"};function a(e,n){return l(),o("div",r,[s(e.$slots,"default",{class:"w-full h-full"})])}const _=t(c,[["render",a]]);export{_ as I};
