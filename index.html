@@ -1,3 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv='refresh' content='0; URL=/ttgs'>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Evgenii Opryshko is a PhD student in Computer Science at the University of Toronto working on reinforcement learning, robot learning, and robust AI systems.">
+  <meta name="author" content="Evgenii Opryshko">
+  <meta property="og:title" content="Evgenii Opryshko">
+  <meta property="og:description" content="PhD student at the University of Toronto working on reinforcement learning, robot learning, and robust AI systems.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ktolnos.github.io/">
+  <meta property="og:image" content="https://ktolnos.github.io/images/image.png">
+  <meta name="theme-color" content="#f3efe8">
+  <title>Evgenii Opryshko</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #22201c;
+      --muted: #6d675e;
+      --paper: #fbfaf7;
+      --surface: #ffffff;
+      --line: #ded7ca;
+      --accent: #0f766e;
+      --accent-dark: #0c4a43;
+      --warm: #a84f2b;
+      --blue: #2f5f9f;
+      --shadow: 0 24px 70px rgba(44, 37, 26, 0.12);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(15, 118, 110, 0.08), transparent 36rem),
+        linear-gradient(315deg, rgba(47, 95, 159, 0.08), transparent 34rem),
+        var(--paper);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-color: rgba(15, 118, 110, 0.42);
+      text-decoration-thickness: 0.09em;
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--accent-dark);
+      text-decoration-color: currentColor;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(222, 215, 202, 0.72);
+      background: rgba(251, 250, 247, 0.86);
+      backdrop-filter: blur(18px);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 68px;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 0.98rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 650;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+    }
+
+    main {
+      padding: 54px 0 66px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: clamp(32px, 6vw, 74px);
+      align-items: center;
+      min-height: calc(100vh - 140px);
+      border-top: 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--accent-dark);
+      font-size: 0.83rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 11ch;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.6rem, 10vw, 7.6rem);
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 0.9;
+    }
+
+    .lead {
+      max-width: 720px;
+      margin: 28px 0 0;
+      color: #3f3a33;
+      font-size: clamp(1.08rem, 2vw, 1.38rem);
+      line-height: 1.55;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 32px 0 0;
+    }
+
+    .action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.68);
+      box-shadow: 0 7px 18px rgba(44, 37, 26, 0.06);
+      font-weight: 760;
+      text-decoration: none;
+    }
+
+    .action.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .photo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-self: center;
+      width: min(100%, 380px);
+    }
+
+    .photo {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: min(520px, calc(100vh - 180px));
+      object-fit: contain;
+      border: 1px solid rgba(34, 32, 28, 0.08);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      background: #eee7dc;
+    }
+
+    .caption {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    section {
+      padding: 42px 0;
+      border-top: 1px solid rgba(222, 215, 202, 0.82);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 0.45fr 1fr;
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin: 4px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .focus {
+      min-height: 148px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .focus strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent-dark);
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+
+    .focus span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .entry {
+      display: grid;
+      grid-template-columns: 0.34fr minmax(0, 1fr);
+      gap: 24px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: 0 12px 32px rgba(44, 37, 26, 0.06);
+    }
+
+    .entry h3 {
+      margin: 0;
+      font-size: 1.16rem;
+      line-height: 1.3;
+    }
+
+    .entry-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .entry-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--accent-dark);
+      background: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 800;
+      overflow: hidden;
+    }
+
+    .entry-logo img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .entry-role {
+      margin: 6px 0 0;
+      color: var(--accent-dark);
+      font-weight: 780;
+      line-height: 1.35;
+    }
+
+    .entry-date {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 650;
+    }
+
+    .entry ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: #3f3a33;
+    }
+
+    .entry li + li {
+      margin-top: 8px;
+    }
+
+    .entry li::marker {
+      color: var(--accent);
+    }
+
+    .pub-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .publication {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: start;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: 0 12px 32px rgba(44, 37, 26, 0.07);
+    }
+
+    .publication h3 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+      line-height: 1.3;
+    }
+
+    .meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .meta .me {
+      color: var(--ink);
+      font-weight: inherit;
+      text-decoration: underline;
+      text-decoration-color: rgba(15, 118, 110, 0.48);
+      text-decoration-thickness: 0.1em;
+      text-underline-offset: 0.18em;
+    }
+
+    .pub-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+      min-width: 190px;
+    }
+
+    .pub-links a {
+      min-height: 36px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--accent-dark);
+      font-size: 0.92rem;
+      font-weight: 760;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .contact a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      font-weight: 760;
+      text-decoration: none;
+    }
+
+    .contact-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contact span {
+      color: var(--muted);
+      font-weight: 620;
+    }
+
+    .contact .contact-label {
+      color: var(--ink);
+      font-weight: 760;
+    }
+
+    footer {
+      padding: 28px 0 44px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 860px) {
+      nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 16px 0;
+        gap: 10px;
+      }
+
+      .nav-links {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 14px 18px;
+      }
+
+      main {
+        padding-top: 28px;
+      }
+
+      .hero,
+      .section-head,
+      .contact {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: 0;
+      }
+
+      .photo-wrap {
+        align-items: flex-start;
+        justify-self: start;
+        width: min(100%, 340px);
+      }
+
+      .photo {
+        max-height: min(420px, 58vh);
+      }
+
+      .focus-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .publication {
+        grid-template-columns: 1fr;
+      }
+
+      .entry {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .pub-links {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        width: min(100% - 22px, 1120px);
+      }
+
+      .nav-links {
+        font-size: 0.9rem;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 17vw, 4.8rem);
+      }
+
+      .actions,
+      .pub-links {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .action,
+      .pub-links a {
+        justify-content: center;
+      }
+
+      .focus-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact a {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+    }
+  </style>
 </head>
+<body>
+  <svg aria-hidden="true" style="display: none;">
+    <symbol id="icon-mail" viewBox="0 0 24 24">
+      <path d="M4 6h16v12H4z"></path>
+      <path d="m4 7 8 6 8-6"></path>
+    </symbol>
+    <symbol id="icon-github" viewBox="0 0 24 24">
+      <path d="M9 19c-4 1.5-4-2-5-2.5"></path>
+      <path d="M15 22v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.3 1.3a11.3 11.3 0 0 0-6 0C7 3.8 6 4.1 6 4.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.6 10.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V22"></path>
+    </symbol>
+    <symbol id="icon-scholar" viewBox="0 0 24 24">
+      <path d="m3 9 9-5 9 5-9 5z"></path>
+      <path d="M7 11v5c3 2 7 2 10 0v-5"></path>
+    </symbol>
+    <symbol id="icon-linkedin" viewBox="0 0 24 24">
+      <path d="M6 9v10"></path>
+      <path d="M6 5v.01"></path>
+      <path d="M11 19v-5.5a3 3 0 0 1 6 0V19"></path>
+      <path d="M11 9v10"></path>
+    </symbol>
+    <symbol id="icon-lab" viewBox="0 0 24 24">
+      <path d="M10 3v5l-5 9a3 3 0 0 0 2.6 4.5h8.8A3 3 0 0 0 19 17l-5-9V3"></path>
+      <path d="M8 3h8"></path>
+      <path d="M7 15h10"></path>
+    </symbol>
+  </svg>
+  <header>
+    <nav class="page" aria-label="Main navigation">
+      <a class="brand" href="/">Evgenii Opryshko</a>
+      <div class="nav-links">
+        <!-- <a href="#research">Research</a> -->
+        <a href="#publications">Publications</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="hero" aria-label="Introduction">
+      <div>
+        <p class="eyebrow">PhD student · University of Toronto</p>
+        <h1>Evgenii Opryshko</h1>
+        <p class="lead">
+          I work on Reinforcement Learning and Large Language Models with focus on reward hacking and better alignment (RLHF).
+        </p>
+        <div class="actions" aria-label="Profile links">
+          <a class="action primary" href="mailto:opryshko.evgeniy@gmail.com"><svg class="icon"><use href="#icon-mail"></use></svg>Email</a>
+          <a class="action" href="https://github.com/ktolnos" target="_blank" rel="noopener"><svg class="icon"><use href="#icon-github"></use></svg>GitHub</a>
+          <a class="action" href="https://scholar.google.com/scholar?q=%22Evgenii+Opryshko%22" target="_blank" rel="noopener"><svg class="icon"><use href="#icon-scholar"></use></svg>Google Scholar</a>
+          <a class="action" href="https://www.linkedin.com/in/evgenii-opryshko-636609183/" target="_blank" rel="noopener"><svg class="icon"><use href="#icon-linkedin"></use></svg>LinkedIn</a>
+        </div>
+      </div>
+      <figure class="photo-wrap">
+        <img class="photo" src="images/image.png" alt="Portrait of Evgenii Opryshko" width="2086" height="2086">
+        <figcaption class="caption">
+          Computer Science graduate student in the Toronto Intelligent Systems Lab.
+        </figcaption>
+      </figure>
+    </section>
+<!--
+    <section id="research" aria-labelledby="research-title">
+      <div class="section-head">
+        <h2 id="research-title">Research</h2>
+        <p>
+          I am interested in methods that make learned agents useful at test time: planning over offline data, steering policies without retraining, and stress-testing reasoning models when the surface form of a problem changes.
+        </p>
+      </div>
+      <div class="focus-grid">
+        <div class="focus">
+          <strong>Goal-conditioned RL</strong>
+          <span>Long-horizon behavior from unlabeled, reward-free offline datasets.</span>
+        </div>
+        <div class="focus">
+          <strong>Test-time planning</strong>
+          <span>Lightweight search and adaptation around frozen learned policies.</span>
+        </div>
+        <div class="focus">
+          <strong>Robot learning</strong>
+          <span>Policy steering, verifiers, and practical improvements for manipulation.</span>
+        </div>
+        <div class="focus">
+          <strong>Robust reasoning</strong>
+          <span>Benchmarks that expose brittle reasoning under meaning-preserving perturbations.</span>
+        </div>
+      </div>
+    </section>
+  -->
+    <section id="publications" aria-labelledby="publications-title">
+      <div class="section-head">
+        <h2 id="publications-title">Publications</h2>
+        <p>
+          Project pages will live here as they are added. For now, each paper links to either its local page or a stable scholarly entry.
+        </p>
+      </div>
+      <div class="pub-list">
+        <article class="publication">
+          <div>
+            <h3>Test-Time Graph Search for Goal-Conditioned Reinforcement Learning</h3>
+            <p class="meta"><span class="me">Evgenii Opryshko</span>, Junwei Quan, Claas Voelcker, Yilun Du, Igor Gilitschenski · ICML 2026</p>
+          </div>
+          <div class="pub-links" aria-label="Links for Test-Time Graph Search for Goal-Conditioned Reinforcement Learning">
+            <a href="ttgs/">Project page</a>
+            <a href="https://arxiv.org/abs/2510.07257" target="_blank" rel="noopener">arXiv</a>
+            <a href="https://github.com/ktolnos/TTGS" target="_blank" rel="noopener">Code</a>
+            <a href="https://scholar.google.com/scholar?q=%22Test-Time+Graph+Search+for+Goal-Conditioned+Reinforcement+Learning%22" target="_blank" rel="noopener">Scholar</a>
+          </div>
+        </article>
+
+        <article class="publication">
+          <div>
+            <h3>Modification-Considering Value Learning for Reward Hacking Mitigation in RL</h3>
+            <p class="meta"><span class="me">Evgenii Opryshko</span>, Umangi Jain, Igor Gilitschenski · RLC 2026</p>
+          </div>
+          <div class="pub-links" aria-label="Links for Modification-Considering Value Learning for Reward Hacking Mitigation in RL">
+            <a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=fF8qBKQAAAAJ&amp;citation_for_view=fF8qBKQAAAAJ:u-x6o8ySG0sC" target="_blank" rel="noopener">Scholar</a>
+            <a href="https://openreview.net/forum?id=pf4civRhjC" target="_blank" rel="noopener">OpenReview</a>
+          </div>
+        </article>
+
+        <article class="publication">
+          <div>
+            <h3>Update-Free On-Policy Steering via Verifiers</h3>
+            <p class="meta">Maria Attarian, Ian Vyse, Claas Voelcker, Jasper Gerigk, <span class="me">Evgenii Opryshko</span>, Anas Almasri, Sumeet Singh, Yilun Du, Igor Gilitschenski · arXiv 2026</p>
+          </div>
+          <div class="pub-links" aria-label="Links for Update-Free On-Policy Steering via Verifiers">
+            <a href="https://arxiv.org/abs/2603.10282" target="_blank" rel="noopener">arXiv</a>
+            <a href="https://scholar.google.com/scholar?q=%22Update-Free+On-Policy+Steering+via+Verifiers%22" target="_blank" rel="noopener">Scholar</a>
+          </div>
+        </article>
+
+        <article class="publication">
+          <div>
+            <h3>Robust Reasoning Benchmark</h3>
+            <p class="meta">Pavel Golikov, <span class="me">Evgenii Opryshko</span>, Gennady Pekhimenko, Mark C. Jeffrey · arXiv 2026</p>
+          </div>
+          <div class="pub-links" aria-label="Links for Robust Reasoning Benchmark">
+            <a href="https://arxiv.org/abs/2604.08571" target="_blank" rel="noopener">arXiv</a>
+            <a href="https://scholar.google.com/scholar?q=%22Robust+Reasoning+Benchmark%22+%22Evgenii+Opryshko%22" target="_blank" rel="noopener">Scholar</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="experience" aria-labelledby="experience-title">
+      <div class="section-head">
+        <h2 id="experience-title">Experience</h2>
+        <p>
+          My path spans AI safety research and production engineering: from reward hacking mitigation in RLHF to shipping mobile products used by tens of millions of people.
+        </p>
+      </div>
+      <div class="timeline">
+        <article class="entry">
+          <div class="entry-heading">
+            <span class="entry-logo"><img src="https://www.google.com/s2/favicons?domain=berkeley.edu&amp;sz=96" alt="UC Berkeley logo"></span>
+            <div>
+              <h3>CHAI, UC Berkeley</h3>
+              <p class="entry-role">Research Intern</p>
+              <p class="entry-date">Apr 2025 - Aug 2025 · Berkeley / remote</p>
+            </div>
+          </div>
+          <ul>
+            <li>Worked with <a href="https://www.michael-k-cohen.com/" target="_blank" rel="noopener">Michael Cohen</a> on preventing reward hacking during RLHF post-training of large language models.</li>
+            <li>Designed a co-training scheme for a reward model and policy LLM to encourage pessimistic reward estimates on model-generated outputs.</li>
+            <li>Built the full research pipeline from proposal to implementation, including reward model and LLM training; the project continues as part of my PhD research.</li>
+          </ul>
+        </article>
+
+        <article class="entry">
+          <div class="entry-heading">
+            <span class="entry-logo"><img src="https://www.google.com/s2/favicons?domain=yandex.com&amp;sz=96" alt="Yandex logo"></span>
+            <div>
+              <h3>Yandex</h3>
+              <p class="entry-role">Senior Software Engineer</p>
+              <p class="entry-date">Sep 2019 - Dec 2023 · Moscow</p>
+            </div>
+          </div>
+          <ul>
+            <li>Led full-cycle development of major features in Yandex Browser and Yandex Search App, products with 100M+ installations and tens of millions of daily active users.</li>
+            <li>Drove architecture and implementation for personal data storage, main UI redesigns, tab manager redesign, recommendations, weather updates, analytics monitoring, and messenger integration.</li>
+            <li>Collaborated across Search App, Taxi, and Market on backend-driven UI infrastructure, including page caching and multi-screen navigation.</li>
+            <li>Improved testing infrastructure and release reliability, conducted technical interviews, and served as admission committee member, mentor, and lecturer for <a href="https://academy.yandex.ru/schools/mobile" target="_blank" rel="noopener">Yandex Mobile Development School</a>.</li>
+          </ul>
+        </article>
+
+        <article class="entry">
+          <div class="entry-heading">
+            <span class="entry-logo"><img src="https://www.google.com/s2/favicons?domain=ronasit.com&amp;sz=96" alt="Ronas IT logo"></span>
+            <div>
+              <h3>Ronas IT</h3>
+              <p class="entry-role">Mobile Developer</p>
+              <p class="entry-date">Nov 2018 - Sep 2019 · Krasnodar</p>
+            </div>
+          </div>
+          <ul>
+            <li>Architected and shipped Android, iOS, and Flutter applications for international clients, often owning the full lifecycle from requirements to release.</li>
+            <li>Worked directly with customers to translate business needs into technical user stories and product decisions.</li>
+            <li>Created an Android application skeleton with architecture, common libraries, screen generation scripts, navigation patterns, and network caching utilities.</li>
+          </ul>
+        </article>
+
+        <article class="entry">
+          <div class="entry-heading">
+            <span class="entry-logo"><img src="https://www.google.com/s2/favicons?domain=wecandevelopit.com&amp;sz=96" alt="WeCanDevelopIt logo"></span>
+            <div>
+              <h3>WeCanDevelopIt</h3>
+              <p class="entry-role">Software Developer</p>
+              <p class="entry-date">Apr 2016 - Nov 2018 · Simferopol</p>
+            </div>
+          </div>
+          <ul>
+            <li>Started in PHP, then expanded into Node.js and Android development across backend, frontend, and mobile projects for UK and US clients.</li>
+            <li>Refactored legacy codebases, adopted Git workflows, and implemented architecture patterns and dependency injection in mobile applications.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="education" aria-labelledby="education-title">
+      <div class="section-head">
+        <h2 id="education-title">Education</h2>
+        <p>
+          My academic work centers on reinforcement learning, reward hacking in RLHF, and reasoning distillation in RLVR.
+        </p>
+      </div>
+      <div class="timeline">
+        <article class="entry">
+          <div class="entry-heading">
+            <span class="entry-logo"><img src="https://www.google.com/s2/favicons?domain=utoronto.ca&amp;sz=96" alt="University of Toronto logo"></span>
+            <div>
+              <h3>University of Toronto</h3>
+              <p class="entry-role">PhD in Computer Science</p>
+              <p class="entry-date">Jan 2024 - Present · GPA 4.08/4.33</p>
+            </div>
+          </div>
+          <ul>
+            <li>Member of the <a href="https://tisl.cs.toronto.edu/" target="_blank" rel="noopener">Toronto Intelligent Systems Lab</a>, supervised by <a href="https://tisl.cs.toronto.edu/author/igor-gilitschenski/" target="_blank" rel="noopener">Prof. Igor Gilitschenski</a>.</li>
+            <li>Research focus: reinforcement learning, reward hacking in RLHF, and reasoning distillation in RLVR.</li>
+          </ul>
+        </article>
+
+        <article class="entry">
+          <div class="entry-heading">
+            <span class="entry-logo"><img src="https://www.google.com/s2/favicons?domain=kubsu.ru&amp;sz=96" alt="Kuban State University logo"></span>
+            <div>
+              <h3>Kuban State University</h3>
+              <p class="entry-role">Bachelor's in Applied Mathematics and Computer Science</p>
+              <p class="entry-date">Feb 2018 - Jul 2019 · GPA 4.94/5</p>
+            </div>
+          </div>
+          <ul>
+            <li>Graduated with honors.</li>
+            <li>Thesis: "Automatic Data Extraction from Text Using Examples," supervised by <a href="https://kubsu.ru/public-portfolio/15417" target="_blank" rel="noopener">Prof. Aleksey Polupanov</a>.</li>
+            <li>Designed a genetic algorithm to synthesize regular expressions for extracting structured data from unstructured text using examples of desired matches.</li>
+          </ul>
+        </article>
+
+        <article class="entry">
+          <div class="entry-heading">
+            <span class="entry-logo"><img src="https://www.google.com/s2/favicons?domain=cfuv.ru&amp;sz=96" alt="Crimean Federal University logo"></span>
+            <div>
+              <h3>Crimean Federal University</h3>
+              <p class="entry-role">Applied Mathematics and Computer Science</p>
+              <p class="entry-date">Sep 2015 - Feb 2018 · GPA 5.00/5</p>
+            </div>
+          </div>
+          <ul>
+            <li>Member of the regional collegiate programming team.</li>
+            <li>Finalist in the Northern Eurasia ICPC, ranked in the top 33%; transferred to Kuban State University.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="section-head">
+        <h2 id="contact-title">Contact</h2>
+        <p>
+          The fastest way to reach me is email. You can also find code, papers, and profile details through the links below.
+        </p>
+      </div>
+      <div class="contact">
+        <a href="mailto:opryshko.evgeniy@gmail.com"><span class="contact-label"><svg class="icon"><use href="#icon-mail"></use></svg>Email</span> <span>opryshko.evgeniy@gmail.com</span></a>
+        <a href="https://github.com/ktolnos" target="_blank" rel="noopener"><span class="contact-label"><svg class="icon"><use href="#icon-github"></use></svg>GitHub</span> <span>@ktolnos</span></a>
+        <a href="https://scholar.google.com/scholar?q=%22Evgenii+Opryshko%22" target="_blank" rel="noopener"><span class="contact-label"><svg class="icon"><use href="#icon-scholar"></use></svg>Google Scholar</span> <span>papers</span></a>
+        <a href="https://tisl.cs.toronto.edu/people/Evgenii%20Opryshko" target="_blank" rel="noopener"><span class="contact-label"><svg class="icon"><use href="#icon-lab"></use></svg>TISL</span> <span>lab profile</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page">
+    <span>© 2026 Evgenii Opryshko.</span>
+  </footer>
+</body>
+</html>
