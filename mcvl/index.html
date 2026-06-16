@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title"
+    content="Modification-Considering Value Learning for Reward Hacking Mitigation in RL - Evgenii Opryshko, Umangi Jain, Igor Gilitschenski">
+  <meta name="description"
+    content="MCVL is a forecast-and-score safeguard for off-policy value-based RL that gates each transition to mitigate reward hacking while remaining comparable to an Oracle trained on the true reward.">
+  <meta name="keywords"
+    content="reinforcement learning, reward hacking, reward tampering, value learning, AI safety, current utility optimization, DDQN, TD3">
+  <meta name="author" content="Evgenii Opryshko, Umangi Jain, Igor Gilitschenski">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="TISL, University of Toronto">
+  <meta property="og:title" content="Modification-Considering Value Learning for Reward Hacking Mitigation in RL">
+  <meta property="og:description"
+    content="MCVL is a forecast-and-score safeguard for off-policy value-based RL that gates each transition to mitigate reward hacking while remaining comparable to an Oracle trained on the true reward.">
+  <meta property="og:url" content="https://ktolnos.github.io/mcvl/">
+  <meta property="og:image" content="https://ktolnos.github.io/mcvl/static/images/main_result.png">
+  <meta property="og:image:alt"
+    content="Modification-Considering Value Learning for Reward Hacking Mitigation in RL - Research Preview">
+  <meta property="article:author" content="Evgenii Opryshko, Umangi Jain, Igor Gilitschenski">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="reinforcement learning">
+  <meta property="article:tag" content="reward hacking">
+  <meta property="article:tag" content="AI safety">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@igilitschenski">
+  <meta name="twitter:creator" content="@evopryshko">
+  <meta name="twitter:title" content="Modification-Considering Value Learning for Reward Hacking Mitigation in RL">
+  <meta name="twitter:description"
+    content="MCVL is a forecast-and-score safeguard for off-policy value-based RL that gates each transition to mitigate reward hacking while remaining comparable to an Oracle trained on the true reward.">
+  <meta name="twitter:image" content="https://ktolnos.github.io/mcvl/static/images/main_result.png">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="Modification-Considering Value Learning for Reward Hacking Mitigation in RL">
+  <meta name="citation_author" content="Opryshko, Evgenii">
+  <meta name="citation_author" content="Jain, Umangi">
+  <meta name="citation_author" content="Gilitschenski, Igor">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="Reinforcement Learning Conference (RLC)">
+
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>Modification-Considering Value Learning for Reward Hacking Mitigation in RL - Evgenii Opryshko, Umangi
+    Jain, Igor Gilitschenski | Academic Research</title>
+
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- MathJax for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Modification-Considering Value Learning for Reward Hacking Mitigation in RL",
+    "description": "MCVL is a forecast-and-score safeguard for off-policy value-based RL that gates each transition to mitigate reward hacking while remaining comparable to an Oracle trained on the true reward.",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Evgenii Opryshko",
+        "affiliation": { "@type": "Organization", "name": "University of Toronto, Vector Institute" }
+      },
+      {
+        "@type": "Person",
+        "name": "Umangi Jain",
+        "affiliation": { "@type": "Organization", "name": "University of Toronto, Vector Institute" }
+      },
+      {
+        "@type": "Person",
+        "name": "Igor Gilitschenski",
+        "affiliation": { "@type": "Organization", "name": "University of Toronto, Vector Institute" }
+      }
+    ],
+    "datePublished": "2026",
+    "publisher": { "@type": "Organization", "name": "Reinforcement Learning Conference" },
+    "url": "https://ktolnos.github.io/mcvl/",
+    "keywords": ["reinforcement learning", "reward hacking", "reward tampering", "value learning", "AI safety"],
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/"
+  }
+  </script>
+
+  <!-- Website/Organization Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "TISL, University of Toronto",
+    "url": "https://tisl.cs.toronto.edu/",
+    "logo": "https://tisl.cs.toronto.edu/icons/LongSiteLogo.svg",
+    "sameAs": [
+      "https://x.com/igilitschenski",
+      "https://github.com/ktolnos"
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">Modification-Considering Value Learning for Reward Hacking
+                Mitigation in RL</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <a href="../">Evgenii
+                    Opryshko</a>,</span>
+                <span class="author-block">
+                  <a href="https://umangi-jain.github.io/" target="_blank">Umangi Jain</a>,</span>
+                <span class="author-block">
+                  <a href="https://www.gilitschenski.org/igor/" target="_blank">Igor Gilitschenski</a>
+                </span>
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">University of Toronto &nbsp;&nbsp;·&nbsp;&nbsp; Vector Institute<br>
+                  Reinforcement Learning Conference (RLC) 2026</span>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- Paper / OpenReview -->
+                  <span class="link-block">
+                    <a href="https://openreview.net/forum?id=pf4civRhjC" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
+                  </span>
+
+                  <!-- OpenReview -->
+                  <span class="link-block">
+                    <a href="https://openreview.net/forum?id=pf4civRhjC" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-open-access"></i>
+                      </span>
+                      <span>OpenReview</span>
+                    </a>
+                  </span>
+
+                  <!-- Code -->
+                  <span class="link-block">
+                    <a href="https://github.com/ktolnos/MCVL" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teaser -->
+    <section class="hero teaser has-text-justified">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <p class="has-text-centered">
+            <img src="static/images/main_result.png" alt="MCVL vs. base learners across seven environments"
+              class="blend-img-background center-image" style="width: 100%; height: auto;">
+          </p>
+          <br>
+          <p>
+            Reward hacking in a nutshell. Across four safety-relevant gridworlds and three modified MuJoCo tasks, the
+            base learners (DDQN/TD3) discover spurious reward sources and drive the <i>observed return</i> (bottom)
+            sky-high while the <i>true performance</i> (top) collapses. MCVL instead screens each incoming transition
+            and rejects the ones that would steer learning toward the hack, tracking an Oracle that has access to the
+            true reward — without ever observing it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abstract -->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Reinforcement learning agents can exploit misspecified reward signals to achieve high apparent returns
+                while failing on the intended objective, a failure mode known as <i>reward hacking</i>. Existing
+                practical defenses typically constrain policy updates to stay near a known safe reference, creating a
+                tension between suppressing hacking and permitting legitimate improvement. We propose
+                <i>Modification-Considering Value Learning</i> (MCVL), which operationalizes the theoretical idea of
+                <i>current utility optimization</i> for standard value-based RL. MCVL wraps an off-policy learner and
+                treats each incoming transition as a candidate modification: it forecasts two training paths, one that
+                includes the transition and one that does not, and scores both with a frozen bootstrapped-return
+                estimator derived from a learned reward model and value function. The transition is admitted only if
+                inclusion does not decrease the score. We formalize conditions under which this filtering is both safe
+                and permissive, and instantiate MCVL with DDQN and TD3. Across four safety-relevant gridworlds and three
+                modified MuJoCo continuous-control tasks with diverse hacking mechanisms, MCVL mitigates reward hacking
+                while continuing to improve the intended objective.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Method -->
+    <section class="section hero is-small">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-full">
+            <div class="content">
+              <h2 class="title is-3">Method</h2>
+              <p class="has-text-justified">
+                MCVL poses a counterfactual question for every newly observed transition
+                \(T_{\mathrm{new}} = (s, a, r, s')\): if the agent were to spend the
+                next few training steps either (i) on its current replay buffer \(\mathcal{D}\) alone, or (ii) on
+                \(\mathcal{D}\) augmented with the new transition, which resulting policy would
+                score higher under the agent's <i>current</i> return estimator? The transition is accepted if and only
+                if adding it does not decrease the score.
+              </p>
+              <p class="has-text-justified">
+                The estimator is an \(n\)-step bootstrapped return that combines a learned reward model
+                \(R_\psi\) with a value-function bootstrap
+                \(Q_\theta\), frozen to the live agent's current values during
+                scoring. Both branches are forecast under an identical compute budget, scored by the same frozen
+                evaluator on the same start states, and rolled out under the same transition model — isolating the
+                effect of admitting the transition and making the comparison robust to estimation error.
+              </p>
+              <ol>
+                <li><strong>Forecast.</strong> Clone the current networks and run \(l\) base-learner updates on each
+                  of the two datasets, producing forecasted policies \(\tilde{\pi}^{0}\)
+                  and \(\tilde{\pi}^{+}\). These updates do not touch the live agent.</li>
+                <li><strong>Score.</strong> Estimate the expected return of each forecasted policy with \(k\) rollouts
+                  of length \(n\) under the frozen bootstrapped-return estimator.</li>
+                <li><strong>Gate.</strong> Admit \(T_{\mathrm{new}}\) into the
+                  buffer iff \(\hat{J}(\tilde{\pi}^{+}) \ge \hat{J}(\tilde{\pi}^{0})\); otherwise
+                  discard it and reset the environment.</li>
+              </ol>
+              <p class="has-text-justified">
+                MCVL wraps any off-policy value-based learner and requires <strong>no access to a safe reference
+                policy</strong>. It only assumes a seed dataset of non-hacking transitions for pretraining the return
+                estimator: for gridworlds we collect this in a <i>Safe</i> variant with the hacking affordance removed,
+                while for continuous control a random-policy dataset suffices. We instantiate MCVL as
+                <strong>MC-DDQN</strong> and <strong>MC-TD3</strong>.
+              </p>
+              <p class="has-text-justified">
+                We further prove that, given an \(\epsilon\)-accurate evaluator, the gating
+                rule is <strong>safe</strong> (rejects transitions that would degrade true return by more than
+                \(2\epsilon\)), <strong>permissive</strong> (never rejects a transition
+                that would improve true return by more than \(2\epsilon\)), and admits
+                only <strong>bounded degradation</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Environments -->
+    <section class="section hero is-small is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-full">
+            <div class="content">
+              <h2 class="title is-3">Environments</h2>
+              <p class="has-text-justified">
+                We evaluate on four safety-relevant gridworlds and three modified MuJoCo continuous-control tasks, each
+                exhibiting a different reward-hacking mechanism. Gridworlds include our <i>Box Moving</i> environment
+                together with <i>Absent Supervisor</i> and <i>Tomato Watering</i> from the AI Safety Gridworlds and
+                <i>Rocks and Diamonds</i>. For continuous control we modify Reacher, Ant, and HalfCheetah with spurious
+                reward sources that model reward tampering and sensor malfunctions.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-full has-text-centered">
+            <img src="static/images/env_box_moving.png" alt="Box Moving environment: Safe, Full, and No-Hack variants"
+              class="blend-img-background center-image" style="width: 100%; max-width: 920px; height: auto;">
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified">
+              <p>
+                <strong>Box Moving</strong> is the environment we introduce to expose the accept/reject logic of MCVL in
+                its simplest form. The agent moves up or down a corridor; stepping on an arrow nudges the box in that
+                direction, and the box teleports back to the center once it reaches the top. The <i>true</i> objective
+                is to push the box <em>upward</em>, which a non-hacking policy can do by alternating two up-arrows.
+              </p>
+              <p>
+                The intuition for the hack lives in the <strong>(b) Full</strong> variant: a bottom cell pays out a
+                spurious <span class="is-family-monospace">+5</span> from a faulty reward system whenever it is pressed.
+                A reward-maximizing agent learns to repeatedly trigger this tile with down-arrows, racking up observed
+                reward while dragging the box <em>downward</em> — directly against the intended goal. In the
+                <strong>(a) Safe</strong> variant the tile is absent, so it provides hack-free seed data for
+                pretraining the return estimator. The <strong>(c) No-Hack</strong> variant is the crucial control:
+                here collecting the <span class="is-family-monospace">+5</span> does <em>not</em> block moving the box
+                up, so those transitions are genuinely aligned with the objective and <em>should</em> be admitted.
+                MCVL rejects the harmful transitions in <i>Full</i> while still accepting the harmless ones in
+                <i>No-Hack</i> — exactly the behavior a safeguard needs to mitigate hacking without throttling
+                legitimate progress.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-one-third has-text-centered">
+            <img src="static/images/env_absent_supervisor.png" alt="Absent Supervisor environment"
+              class="blend-img-background center-image" style="width: 100%; height: auto;">
+            <p class="is-size-6"><strong>Absent Supervisor.</strong> The shortest path crosses a punishment cell whose
+              cost depends on whether a supervisor is present.</p>
+          </div>
+          <div class="column is-one-third has-text-centered">
+            <img src="static/images/env_tomato_watering.png" alt="Tomato Watering environment"
+              class="blend-img-background center-image" style="width: 100%; height: auto;">
+            <p class="is-size-6"><strong>Tomato Watering.</strong> A bucket induces a perceptual delusion that makes all
+              cells appear as watered tomatoes.</p>
+          </div>
+          <div class="column is-one-third has-text-centered">
+            <img src="static/images/env_rocks_diamonds.png" alt="Rocks and Diamonds environment"
+              class="blend-img-background center-image" style="width: 100%; height: auto;">
+            <p class="is-size-6"><strong>Rocks and Diamonds.</strong> A switch flips the observed rock reward to
+              <span class="is-family-monospace">+10</span>, while true performance still prefers diamonds.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="section hero is-small">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-full">
+            <div class="content">
+              <h2 class="title is-3">Results</h2>
+              <p class="has-text-justified">
+                Across every task, MCVL maintains high <i>true performance</i> while the base learners hack, reaching
+                final performance comparable to an <i>Oracle</i> trained directly on the true reward — despite never
+                observing it. A <i>Frozen</i> policy that stops learning after pretraining substantially underperforms,
+                showing that continued learning beyond pretraining matters. In several gridworlds MCVL even reaches
+                strong performance faster than the Oracle, due to an implicit curriculum induced by rejecting
+                transitions that cause large early behavioral shifts.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-full has-text-centered">
+            <img src="static/images/main_result.png" alt="Main results across all seven environments"
+              class="blend-img-background center-image" style="width: 100%; height: auto;">
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-four-fifths has-text-centered">
+            <div class="content has-text-justified">
+              <p>
+                For each task, the top panel is the intended objective (unobserved <i>true performance</i>) and the
+                bottom panel is the <i>observed return</i> (proxy). Bold lines are the mean over 10 seeds; bands are
+                bootstrapped 95% confidence intervals. On continuous control, MC-TD3 likewise tracks the Oracle while
+                the base learner pursues the sensor-corruption or reward-tampering bonus at the expense of the intended
+                movement.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ablations -->
+    <section class="section hero is-small is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-full">
+            <div class="content">
+              <h2 class="title is-3">Ablations &amp; Sensitivity</h2>
+              <p class="has-text-justified">
+                We study when to trigger checks, how to conduct them, and how to handle harmful transitions. Triggering
+                a check only when the observed reward disagrees with the reward model (<i>Check-by-reward</i>) matches
+                <i>Check-all</i> at lower cost and beats <i>Discard-by-reward</i>. Crucially, <strong>forecasting
+                matters</strong>: an <i>Each-step</i> variant that compares policies before and after a single gradient
+                step fails to prevent hacking, while allowing \(l\) forecast updates gives the learner enough room to
+                turn a transition into a policy shift the evaluator can detect. As little as 300 pretraining steps in a
+                <i>Safe</i> variant suffices for all seeds to avoid hacking.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-half has-text-centered">
+            <img src="static/images/ablations.png" alt="Alternative training schemes"
+              class="blend-img-background center-image" style="width: 100%; height: auto;">
+            <p class="is-size-6"><strong>Alternative training schemes</strong> on Box Moving.</p>
+          </div>
+          <div class="column is-half has-text-centered">
+            <img src="static/images/initial_training_steps.png" alt="Effect of pretraining steps"
+              class="blend-img-background center-image" style="width: 100%; height: auto;">
+            <p class="is-size-6"><strong>Pretraining steps.</strong> 0 means no pretraining.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BibTeX citation -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <div class="bibtex-header">
+          <h2 class="title">BibTeX</h2>
+          <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+            <i class="fas fa-copy"></i>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+        <pre id="bibtex-code"><code>@inproceedings{opryshko2026mcvl,
+      title={Modification-Considering Value Learning for Reward Hacking Mitigation in {RL}},
+      author={Evgenii Opryshko and Umangi Jain and Igor Gilitschenski},
+      booktitle={Reinforcement Learning Conference (RLC)},
+      year={2026},
+      url={https://openreview.net/forum?id=pf4civRhjC},
+}</code></pre>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                  target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                  href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+                You are free to borrow the source code of this website, we just ask that you link back to this page in
+                the footer. <br> This website is licensed under a <a rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                  Commons Attribution-ShareAlike 4.0 International License</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+</body>
+
+</html>
