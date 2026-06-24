@@ -399,6 +399,49 @@
               <span class="is-family-monospace">+10</span>, while true performance still prefers diamonds.</p>
           </div>
         </div>
+
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified">
+              <h3 class="title is-4 has-text-centered">Continuous control (MuJoCo)</h3>
+              <p>
+                To test MCVL beyond gridworlds, we modify three Gymnasium continuous-control tasks by injecting spurious
+                reward sources that model <em>reward tampering</em> or <em>sensor malfunctions</em>. In every case the
+                reported performance metric <em>excludes</em> the bonus, and random exploration is unlikely to trigger
+                the hack — so the seed dataset can be collected with a random policy. The base learner is TD3; our
+                method is MC-TD3.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-centered is-vcentered">
+          <div class="column is-one-third has-text-centered">
+            <img src="static/images/cc_reacher.gif" alt="Reacher continuous-control task" loading="lazy"
+              class="blend-img-background center-image" style="width: 100%; max-width: 230px; height: auto; border-radius: 8px;">
+            <p class="is-size-6"><strong>Reacher.</strong> A hidden button pays a one-time
+              <span class="is-family-monospace">+50</span> once the manipulator tip stays in a small region for 15
+              consecutive frames — a reward-tampering affordance distinct from reaching the target.</p>
+          </div>
+          <div class="column is-one-third has-text-centered">
+            <img src="static/images/cc_ant.gif" alt="Ant continuous-control task" loading="lazy"
+              class="blend-img-background center-image" style="width: 100%; max-width: 230px; height: auto; border-radius: 8px;">
+            <p class="is-size-6"><strong>Ant.</strong> A sensor-malfunction bonus fires on high contact force combined
+              with forward velocity, modeling IMU saturation in legged robots; chasing it destabilizes locomotion.</p>
+          </div>
+          <div class="column is-one-third has-text-centered">
+            <img src="static/images/cc_half_cheetah.gif" alt="HalfCheetah continuous-control task" loading="lazy"
+              class="blend-img-background center-image" style="width: 100%; max-width: 230px; height: auto; border-radius: 8px;">
+            <p class="is-size-6"><strong>HalfCheetah.</strong> An optical-flow sensor-failure bonus triggers when the
+              front tip is low and speed is high, rewarding a corrupted reading rather than genuine running.</p>
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-four-fifths has-text-centered">
+            <p class="is-size-7 has-text-grey">Environment animations from the
+              <a href="https://gymnasium.farama.org/environments/mujoco/" target="_blank" rel="noopener">Gymnasium</a>
+              documentation (Farama Foundation).</p>
+          </div>
+        </div>
       </div>
     </section>
 

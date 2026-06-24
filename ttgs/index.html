@@ -396,6 +396,48 @@
     </section>
 
 
+    <!-- Qualitative video comparison -->
+    <section class="section hero is-small">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-full">
+            <div class="content">
+              <h2 class="title is-3">TTGS in Action</h2>
+              <p class="has-text-justified">
+                We illustrate the effect of TTGS on a long-horizon humanoid locomotion task. The frozen HIQL policy
+                struggles to reach the distant goal in one shot, while TTGS decomposes the task into a sequence of short,
+                reliable hops that the same policy can follow to the goal.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <video autoplay controls muted loop playsinline preload="metadata"
+              style="width: 100%; height: auto; border-radius: 8px;">
+              <source src="static/videos/hiql_hls_base_fail_smaller_maze.mp4" type="video/mp4">
+            </video>
+            <h2 class="subtitle has-text-centered" style="margin-top: 0.75rem;">
+              <b>HIQL (baseline).</b> The frozen policy fails to reach the distant goal, getting stuck on this
+              long-horizon humanoid locomotion task.
+            </h2>
+          </div>
+          <div style="width: 20px;"></div>
+          <div class="column is-half">
+            <video autoplay controls muted loop playsinline preload="metadata"
+              style="width: 100%; height: auto; border-radius: 8px;">
+              <source src="static/videos/hiql_hls_ttgs_success_full_legend.mp4" type="video/mp4">
+            </video>
+            <h2 class="subtitle has-text-centered" style="margin-top: 0.75rem;">
+              <b>TTGS + HIQL.</b> The same frozen policy now reaches the goal. We show the dataset samples, the selected
+              subgoals, and the guiding path that steers the agent.
+            </h2>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End qualitative video comparison -->
+
     <!-- Teaser video-->
     <!-- <section class="hero teaser">
   <div class="container is-max-desktop">
@@ -597,6 +639,7 @@
       </div>
       </div>
     </section>
+
     <section class="section hero is-small is-light">
       <div class="container is-max-desktop">
         <div class="columns is-centered has-text-justified">
