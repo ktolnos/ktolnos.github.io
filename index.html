@@ -401,6 +401,19 @@
       white-space: nowrap;
     }
 
+    .pub-links a.project {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 7px 18px rgba(15, 118, 110, 0.22);
+    }
+
+    .pub-links a.project:hover,
+    .pub-links a.project:focus-visible {
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+    }
+
     .contact {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -635,10 +648,10 @@
             <p class="meta"><span class="me">Evgenii Opryshko</span>, Junwei Quan, Claas Voelcker, Yilun Du, Igor Gilitschenski · ICML 2026</p>
           </div>
           <div class="pub-links" aria-label="Links for Test-Time Graph Search for Goal-Conditioned Reinforcement Learning">
-            <a href="ttgs/">Project page</a>
             <a href="https://arxiv.org/abs/2510.07257" target="_blank" rel="noopener">arXiv</a>
             <a href="https://github.com/ktolnos/TTGS" target="_blank" rel="noopener">Code</a>
             <a href="https://scholar.google.com/scholar?q=%22Test-Time+Graph+Search+for+Goal-Conditioned+Reinforcement+Learning%22" target="_blank" rel="noopener">Scholar</a>
+            <a class="project" href="ttgs/">Project page</a>
           </div>
         </article>
 
@@ -648,10 +661,10 @@
             <p class="meta"><span class="me">Evgenii Opryshko</span>, Umangi Jain, Igor Gilitschenski · RLC 2026</p>
           </div>
           <div class="pub-links" aria-label="Links for Modification-Considering Value Learning for Reward Hacking Mitigation in RL">
-            <a href="mcvl/">Project page</a>
             <a href="https://openreview.net/forum?id=pf4civRhjC" target="_blank" rel="noopener">OpenReview</a>
             <a href="https://github.com/ktolnos/MCVL" target="_blank" rel="noopener">Code</a>
             <a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=fF8qBKQAAAAJ&amp;citation_for_view=fF8qBKQAAAAJ:u-x6o8ySG0sC" target="_blank" rel="noopener">Scholar</a>
+            <a class="project" href="mcvl/">Project page</a>
           </div>
         </article>
 
